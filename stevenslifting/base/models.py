@@ -9,7 +9,6 @@ from django.contrib.auth.models import (
 # Create your models here.
 
 class User(AbstractBaseUser):
-    user_id = UUID
     first_name = models.CharField(null=False, max_length=255)
     last_name = models.CharField(null=False, max_length=255)
     email_address = models.EmailField(
@@ -75,3 +74,39 @@ class UserManager(BaseUserManager):
         user.admin = True
         user.save(using = self._db)
         return user
+
+class Workout(models.Model):
+    workout_name = models.CharField(null=False, max_length=255)
+    created_date_time = models.DateTimeField(auto_now_add=True)
+    updated_date_time = models.DateTimeField(auto_now=True)
+    workout_date = models.DateTimeField()
+    # list of exercises
+
+    def __str__(self):
+        return '{}: {}'.format(str(self.workout_id), self.workout_name)
+
+class Exercise(models.Model):
+    exercise_name = models.CharField(null=False, max_length=255)
+    created_date_time = models.DateTimeField(auto_now_add=True)
+    updated_date_time = models.DateTimeField(auto_now=True)
+    exercise_date = models.DateTimeField()
+    # foreign key relationship: one Workout can have many exercises
+    workout = models.ForeignKey(Workout, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return '{}: {}'.format(str(self.exercise_id), self.exercise_name)
+
+class Set(models.Model):
+    set_number = models.IntegerField(default=1, null=False)
+    num_repititions = models.IntegerField(null=True)
+    weight = models.FloatField(null=True)
+    notes = models.TextField(null=True)
+    created_date_time = models.DateTimeField(auto_now_add=True)
+    updated_date_time = models.DateTimeField(auto_now=True)
+    # foreign key relationship: one Exercise can have multiple sets
+    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return '{}: {}'.format(str(self.set_id), self.set_number)
+
+
