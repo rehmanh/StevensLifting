@@ -83,7 +83,7 @@ class Workout(models.Model):
     # list of exercises
 
     def __str__(self):
-        return '{}: {}'.format(str(self.workout_id), self.workout_name)
+        return self.workout_name
 
 class Exercise(models.Model):
     exercise_name = models.CharField(null=False, max_length=255)
@@ -94,7 +94,7 @@ class Exercise(models.Model):
     workout = models.ForeignKey(Workout, on_delete=models.CASCADE)
 
     def __str__(self):
-        return '{}: {}'.format(str(self.exercise_id), self.exercise_name)
+        return self.exercise_name
 
 class Set(models.Model):
     set_number = models.IntegerField(default=1, null=False)
@@ -107,6 +107,14 @@ class Set(models.Model):
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
 
     def __str__(self):
-        return '{}: {}'.format(str(self.set_id), self.set_number)
+        return str(self.set_number)
 
+class Announcement(models.Model):
+    title = models.CharField(null=False, max_length=255)
+    body = models.TextField(null=False)
+    created_date_time = models.DateTimeField(auto_now_add=True)
+    updated_date_time = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.title
+    

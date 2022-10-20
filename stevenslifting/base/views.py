@@ -1,6 +1,9 @@
 from django.shortcuts import render
 
+from .models import Announcement
+
 # Create your views here.
 def home(request):
-    # return HttpResponse('Home Page')
-    return render(request, 'home.html')
+    announcements = Announcement.objects.all()
+    context = {'announcements': announcements}
+    return render(request, 'base/home.html', context)

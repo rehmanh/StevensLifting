@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Stevens Lifting</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        {% include 'base/navbar.html' %}
+        <div>
+            <div>
+                {% for announcement in announcements %}
+                    <div>
+                        <h5>{{announcement.title}}</h5>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </body>
+</html>
+
