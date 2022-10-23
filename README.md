@@ -27,4 +27,5 @@
 - To run app server: `python3 manage.py runserver`
 - To generate migration files (after model object changes are made): `python3 manage.py makemigrations`
 - To run migration command (after makemigrations): `python3 manage.py migrate`
+- To launch the Django shell: `python3 manage.py shell`, and make sure to `from base.models import <ModelName>` to access rows
 
