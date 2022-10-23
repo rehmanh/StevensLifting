@@ -29,3 +29,11 @@
 - To run migration command (after makemigrations): `python3 manage.py migrate`
 - To launch the Django shell: `python3 manage.py shell`, and make sure to `from base.models import <ModelName>` to access rows
 
+#### Troubleshooting:
+If for some reason a change is made to a Model object that results in a broken migration (for example, a foreign key added AFTER migrating a table), then 
+you might want to wipe out the db and migration files and start fresh:
+1. delete `db.sqlite3` file
+2. delete all migration files
+3. run `python3 manage.py makemigrations` to re-generate migration files and sqlite file
+4. finally `python3 manage.py migrate`. the `db.sqlite3` file should be automatically regenerated
+
