@@ -12,8 +12,10 @@
             <div>
                 {% for announcement in announcements %}
                     <div>
-                        <h5>{{announcement.title}}</h5>
+                        <h3>{{announcement.title}}</h3>
+                        <h5>{{announcement.body}}</h5>
                     </div>
+                    <hr>
                 {% endfor %}
             </div>
         </div>

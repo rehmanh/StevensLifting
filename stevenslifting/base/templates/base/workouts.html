@@ -1,0 +1,9 @@
+{% include 'base/navbar.html' %}
+<div>
+    Showing workouts for {{user}}
+    {% for workout in workouts %}
+    <div>
+        <h3>{{workout.workout_name}}</h3>    
+    </div>
+    {% endfor %}
+</div>
