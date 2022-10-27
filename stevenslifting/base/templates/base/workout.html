@@ -1,0 +1,18 @@
+{% include 'base/navbar.html' %}
+<div>
+    Details for workout {{workout.workout_name}} on {{workout.workout_date}}
+    {% for exercise in exercises %}
+    <div>
+        <h3>
+            {{exercise.exercise_name}}
+        </h3>
+        {% for set in exercise.sets %}
+            <h4>{{set.set_number}}</h4>
+            <h4>{{set.num_repititions}}</h4>
+            <h4>{{set.weight}}</h4>
+            <h4>{{set.notes}}</h4>
+        {% endfor %}
+    </div>
+    <hr>
+    {% endfor %}
+</div>

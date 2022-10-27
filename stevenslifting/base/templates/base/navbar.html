@@ -20,4 +20,11 @@
             <h3>Your Workouts</h3>
         </a>
     </li>
+    {% if request.user.is_authenticated and request.user.is_staff %}
+    <li>
+        <a href="/admin">
+            <h3>Administration</h3>
+        </a>
+    </li>
+    {% endif %}
 </ul>

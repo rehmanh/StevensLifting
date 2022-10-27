@@ -3,7 +3,16 @@
     Showing workouts for {{user}}
     {% for workout in workouts %}
     <div>
-        <h3>{{workout.workout_name}}</h3>    
+        <h3>
+            <a href="/workout/{{workout.id}}">
+                {{workout.workout_name}}
+            </a>
+        </h3>
+        <h4>{{workout.workout_date}}</h4>
+        {% for exercise in workout.exercises %}
+            <h4>{{ exercise.exercise_name }}</h4>
+        {% endfor %}
     </div>
+    <hr>
     {% endfor %}
 </div>

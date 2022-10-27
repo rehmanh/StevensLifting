@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
-from .models import Announcement, Workout, User
+from .models import Announcement, Workout, User, Exercise, Set
 
 # Create your views here.
 
@@ -38,13 +38,32 @@ def home(request):
     context = {'announcements': announcements}
     return render(request, 'base/home.html', context)
 
-def workout(request):
+def workouts(request):
     if request.user.is_authenticated:
         member = request.user
         workouts = Workout.objects.filter(user=member.id)
-        context = {
-            'workouts': workouts,
-            'user': member
-        }
+        if workouts is not None:
+            for workout in workouts:
+                exercises = Exercise.objects.filter(workout=workout.id)
+                workout.exercises = exercises
+            
+            context = {
+                'workouts': workouts,
+                'user': member
+            }
         return render(request, 'base/workouts.html', context)
-    # else we want to show 404 page, TBD
+
+def workout(request, pk):
+    workout = Workout.objects.get(id=pk)
+    if workout is not None:
+        exercises = Exercise.objects.filter(workout=pk)
+        for exercise in exercises:
+            sets = Set.objects.filter(exercise=exercise.id)
+            exercise.sets = sets
+        context = {
+            'workout': workout,
+            'exercises': exercises
+        }
+    return render(request, 'base/workout.html', context)
+
+        
