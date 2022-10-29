@@ -1,15 +1,34 @@
 {% include 'base/navbar.html' %}
 {% block content %}
-<div>
-    <form method="POST" action="">
+<div style="height: 70%; width: 100%" class='d-flex align-items-center justify-content-center'>
+    <form style = "align-item: center" method="POST" action="">
         {% csrf_token  %}
+        {% comment %} {% csrf_token  %}
         <label>Username:</label>
         <input type="text" name="username" placeholder="Enter your username"/>
         
         <label>Password:</label>
         <input type="password" name="password" placeholder="Enter your password"/>
         
-        <input type="submit" value="Login"/>
+        <input type="submit" value="Login"/> {% endcomment %}
+        <h1 class = 'col-5 mx-auto' style = "padding-bottom: 50px">Login</h1>
+            <div class="form-group row">
+                <label class="col-sm-5 col-form-label">Username:</label>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control" name="username" placeholder="Enter your username"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputPassword3" class="col-sm-5 col-form-label">Password</label>
+                <div class="col-sm-12">
+                    <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                </div>
+            </div>
+
+            <div style='padding-top: 100px' class="d-grid gap-2 col-6 mx-auto">
+                <button class="btn btn-secondary" type="submit">Button</button>
+            </div>
+
     </form>
 </div>
 {% if messages %}
