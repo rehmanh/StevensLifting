@@ -7,10 +7,10 @@
             {{exercise.exercise_name}}
         </h3>
         {% for set in exercise.sets %}
-            <h4>{{set.set_number}}</h4>
-            <h4>{{set.num_repititions}}</h4>
-            <h4>{{set.weight}}</h4>
-            <h4>{{set.notes}}</h4>
+            <h4>Set Number: {{set.set_number}}</h4>
+            <h4>Reps: {{set.num_repititions}}</h4>
+            <h4>Weight: {{set.weight}}</h4>
+            <h4>Notes: {{set.notes}}</h4>
         {% endfor %}
     </div>
     <hr>
