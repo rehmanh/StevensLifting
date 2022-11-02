@@ -11,3 +11,6 @@ media
 
 # Python #
 *$py.class
+
+# macOS files #
+.DS_Store
