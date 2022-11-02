@@ -39,39 +39,7 @@
         <a href="index.html"><img src="{% static 'home/img/logo/logo-1.jpg' %}" alt="" class="img-fluid"></a>
       </div>
 
-      <nav id="navbar" class="navbar">
-        <ul>
-          <li>
-            <a class="nav-link" href="#hero">
-                Home
-            </a>
-          </li>
-          <li>
-            <a class="nav-link" href="{% url 'workouts' %}">
-                Your Workouts
-            </a>
-          </li>
-          <li>
-            {% if request.user.is_authenticated %}
-            <a class="nav-link" href="{% url 'logout' %}">
-                Logout
-            </a>
-            {% else %}
-            <a class="nav-link" href="{% url 'login' %}">
-                Login
-            </a>
-            {% endif %}
-            {% if request.user.is_authenticated and request.user.is_staff %}
-            <li>
-                <a class="nav-link" href="/admin">
-                    Administration
-                </a>
-            </li>
-            {% endif %}
-          </li>  
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar -->
+      {% include 'base/navbar.html' %}
 
     </div>
   </header><!-- End Header -->
@@ -126,7 +94,7 @@
 
     <!-- ======= Services Section ======= -->
     <section id="services" class="services">
-      <div class="container" data-aos="fade-up">
+      <div class="container">
 
         <div class="section-title">
           <h2>Announcements</h2>

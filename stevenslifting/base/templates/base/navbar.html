@@ -1,30 +1,33 @@
-<ul>
-    <li>
-        <a href="/">
-            <h3>Stevens Lifting</h3>
+<nav id="navbar" class="navbar">
+    <ul>
+      <li>
+        <a class="nav-link" href="/">
+            Home
         </a>
-    </li>
-    <li>
+      </li>
+      <li>
+        <a class="nav-link" href="{% url 'workouts' %}">
+            Your Workouts
+        </a>
+      </li>
+      <li>
         {% if request.user.is_authenticated %}
-        <a href="{% url 'logout' %}">
-            <h3>Logout</h3>
+        <a class="nav-link" href="{% url 'logout' %}">
+            Logout
         </a>
         {% else %}
-        <a href="{% url 'login' %}">
-            <h3>Login</h3>
+        <a class="nav-link" href="{% url 'login' %}">
+            Login
         </a>
         {% endif %}
-    </li>
-    <li>
-        <a href="{% url 'workouts' %}">
-            <h3>Your Workouts</h3>
-        </a>
-    </li>
-    {% if request.user.is_authenticated and request.user.is_staff %}
-    <li>
-        <a href="/admin">
-            <h3>Administration</h3>
-        </a>
-    </li>
-    {% endif %}
-</ul>
+        {% if request.user.is_authenticated and request.user.is_staff %}
+        <li>
+            <a class="nav-link" href="/admin">
+                Administration
+            </a>
+        </li>
+        {% endif %}
+      </li>  
+    </ul>
+    <i class="bi bi-list mobile-nav-toggle"></i>
+  </nav>
