@@ -53,7 +53,7 @@ def workouts(request):
             }
         return render(request, 'base/workouts.html', context)
     else: 
-        return render('base/404.html')
+        return render(request, 'base/404.html')
 
 def workout(request, pk):
     workout = Workout.objects.get(id=pk)
@@ -68,6 +68,4 @@ def workout(request, pk):
         }
         return render(request, 'base/workout.html', context)
     else: 
-        return render('base/404.html')
-
-        
+        return render(request, 'base/404.html')
