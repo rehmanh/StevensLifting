@@ -7,5 +7,4 @@ urlpatterns = [
     path('', views.home, name="homepage"),
     path('workouts', views.workouts, name="workouts"),
     path('workout/<str:pk>', views.workout, name="workout")
-    # path('room/<str:pk>/', views.room, name="room")
 ]

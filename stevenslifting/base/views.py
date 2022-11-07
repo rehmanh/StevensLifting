@@ -52,8 +52,10 @@ def workouts(request):
                 'user': member
             }
         return render(request, 'base/workouts.html', context)
-    else: 
-        return render(request, 'base/404.html')
+    else:
+        return render(request, 'base/404.html', context={
+            'msg': 'You must be logged in to view Your Workouts'
+        })
 
 def workout(request, pk):
     workout = Workout.objects.get(id=pk)
@@ -68,4 +70,6 @@ def workout(request, pk):
         }
         return render(request, 'base/workout.html', context)
     else: 
-        return render(request, 'base/404.html')
+        return render(request, 'base/404.html', context={
+            'msg': 'It looks like you do not have any Workouts scheduled'
+        })

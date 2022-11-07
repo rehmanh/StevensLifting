@@ -40,9 +40,17 @@
         {% include 'base/navbar.html' %}
         </div>
     </header>
-    <div>
-        Oops, it looks like there is nothing to see here!
-    </div>
+
+    <section>
+        <div class="container">
+            
+            <div class="section-title">
+                <h2>{{msg}}</h2>
+            </div>
+            
+        </div>
+    </section>
+
     <script src="{% static 'home/vendor/purecounter/purecounter_vanilla.js' %}"></script>
     <script src="{% static 'home/vendor/aos/aos.js' %}"></script>
     <script src="{% static 'home/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
