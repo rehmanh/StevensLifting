@@ -29,6 +29,7 @@
 
   <!-- Template Main CSS File -->
   <link href="{% static 'home/css/style.css' %}" rel="stylesheet">
+  <link href="{% static 'home/css/style2.css' %}" rel="stylesheet">
 </head>
 <body>
 
@@ -41,22 +42,85 @@
         {% include 'base/navbar.html' %}
         </div>
     </header>
-    <div>
-        Details for workout {{workout.workout_name}} on {{workout.workout_date}}
-        {% for exercise in exercises %}
-        <div>
-            <h3>
-                {{exercise.exercise_name}}
-            </h3>
-            {% for set in exercise.sets %}
-                <h4>Set Number: {{set.set_number}}</h4>
-                <h4>Reps: {{set.num_repititions}}</h4>
-                <h4>Weight: {{set.weight}}</h4>
-                <h4>Notes: {{set.notes}}</h4>
+
+    <section id="workout">
+        <div class="container">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-success" role="alert">
+                            {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            Details for workout {{workout.workout_name}} on {{workout.workout_date}}
+            
+            {% for exercise in exercises %}
+            
+            <div class="row">
+                
+                    <h3>
+                        {{exercise.exercise_name}}
+                    </h3>
+
+                    {% for set in exercise.sets %}
+                    <div id="card" style="margin-top: 10px;">
+                        
+                        <div class="card">
+                          <div class="card-header">
+                            <h5 class="mb-0">
+                                Set Number: {{set.set_number}}
+                            </h5>
+                          </div>
+                      
+                          <div class="show" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                                <form method="POST" action="set/{{set.id}}/update">
+                                    {% csrf_token %}
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Repetitions</label>
+                                        <div class="col-sm-10">
+                                            <select name="num_repititions" class="form-control">
+                                                {% for i in range %}
+                                                    {% if set.num_repititions == i %}
+                                                        <option selected>{{i}}</option>
+                                                    {% else %}
+                                                        <option>{{i}}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Weight (lbs)</label>
+                                        <div class="col-sm-10">
+                                            <input name="weight" type="number" value="{{set.weight}}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Set Notes</label>
+                                        <div class="col-sm-10">
+                                            <textarea name="notes" class="form-control" rows="5">{{set.notes}}</textarea>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" style="margin: top 10px;">Update Set</button>
+                                </form>
+                            </div>
+                          </div>
+                        </div>
+       
+
+                    </div>
+                        
+                    {% endfor %}
+            </div>
+
             {% endfor %}
+
         </div>
-        <hr>
-        {% endfor %}
+    </section>
+
+        
+
         <script src="{% static 'home/vendor/purecounter/purecounter_vanilla.js' %}"></script>
         <script src="{% static 'home/vendor/aos/aos.js' %}"></script>
         <script src="{% static 'home/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -67,6 +131,5 @@
 
         <!-- Template Main JS File -->
         <script src="{% static 'home/js/main.js' %}"></script>
-    </div>
 </body>
 

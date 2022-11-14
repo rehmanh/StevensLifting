@@ -66,10 +66,27 @@ def workout(request, pk):
             exercise.sets = sets
         context = {
             'workout': workout,
-            'exercises': exercises
+            'exercises': exercises,
+            'range': range(1, 13)
         }
         return render(request, 'base/workout.html', context)
     else: 
         return render(request, 'base/404.html', context={
             'msg': 'It looks like you do not have any Workouts scheduled'
         })
+
+def update_set(request, pk):
+    if request.method == 'POST':
+        set = Set.objects.get(id=pk)
+        if set is not None:
+            num_reps = request.POST.get("num_repititions")
+            weight = request.POST.get("weight")
+            notes = request.POST.get("notes")
+            set.num_repititions = num_reps
+            set.weight = weight
+            set.notes = notes
+            set.save()
+            messages.success(request, 'Set updated successfully')
+            return redirect(request.META['HTTP_REFERER'])
+        else:
+            messages.error(request, 'There was an error saving the Set details. Please try again')
