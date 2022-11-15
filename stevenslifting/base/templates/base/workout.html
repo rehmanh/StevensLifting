@@ -30,6 +30,9 @@
   <!-- Template Main CSS File -->
   <link href="{% static 'home/css/style.css' %}" rel="stylesheet">
   <link href="{% static 'home/css/style2.css' %}" rel="stylesheet">
+
+  <!-- jQuery 3.6.0 CDN -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 
@@ -63,17 +66,17 @@
                     </h3>
 
                     {% for set in exercise.sets %}
-                    <div id="card" style="margin-top: 10px;">
+                    <div style="margin-top: 10px;">
                         
                         <div class="card">
-                          <div class="card-header">
+                          <div class="card-header" onclick="hideAndShowSets('{{set.id}}')">
                             <h5 class="mb-0">
                                 Set Number: {{set.set_number}}
                             </h5>
                           </div>
                       
-                          <div class="show" aria-labelledby="headingOne" data-parent="#accordion">
-                            <div class="card-body">
+                          <div id="set-{{set.id}}" class="show setContent" aria-labelledby="headingOne">
+                            <div class="card-body exerciseSet">
                                 <form method="POST" action="set/{{set.id}}/update">
                                     {% csrf_token %}
                                     <div class="form-group row">
@@ -119,7 +122,12 @@
         </div>
     </section>
 
-        
+        <script>
+            function hideAndShowSets(setId) {
+                var elementId = "#set-" + setId;
+                $(elementId).slideToggle();
+            }
+        </script>
 
         <script src="{% static 'home/vendor/purecounter/purecounter_vanilla.js' %}"></script>
         <script src="{% static 'home/vendor/aos/aos.js' %}"></script>
@@ -131,5 +139,6 @@
 
         <!-- Template Main JS File -->
         <script src="{% static 'home/js/main.js' %}"></script>
+        <script src="{% static 'home/js/script.js' %}"></script>
 </body>
 
