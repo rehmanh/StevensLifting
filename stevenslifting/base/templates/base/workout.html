@@ -26,6 +26,7 @@
   <link href="{% static 'home/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
   <link href="{% static 'home/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
   <link href="{% static 'home/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <!-- Template Main CSS File -->
   <link href="{% static 'home/css/style.css' %}" rel="stylesheet">
@@ -70,16 +71,24 @@
                         
                         <div class="card">
                           <div class="card-header" onclick="hideAndShowSets('{{set.id}}')">
-                            <h5 class="mb-0">
-                                Set Number: {{set.set_number}}
-                            </h5>
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="mb-0">
+                                        Set Number: {{set.set_number}}
+                                    </h5>
+                                </div>
+                                <div id="icon-{{set.id}}">
+                                    <i class="fa fa-plus"></i>
+                                </div>
+                            </div>
+                            
                           </div>
                       
                           <div id="set-{{set.id}}" class="show setContent" aria-labelledby="headingOne">
                             <div class="card-body exerciseSet">
                                 <form method="POST" action="set/{{set.id}}/update">
                                     {% csrf_token %}
-                                    <div class="form-group row">
+                                    <div class="form-group row" style="margin-bottom: 10px;">
                                         <label class="col-sm-2 col-form-label">Repetitions</label>
                                         <div class="col-sm-10">
                                             <select name="num_repititions" class="form-control">
@@ -93,13 +102,13 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
+                                    <div class="form-group row" style="margin-bottom: 10px;">
                                         <label class="col-sm-2 col-form-label">Weight (lbs)</label>
                                         <div class="col-sm-10">
                                             <input name="weight" type="number" value="{{set.weight}}" class="form-control">
                                         </div>
                                     </div>
-                                    <div class="form-group row">
+                                    <div class="form-group row" style="margin-bottom: 10px;">
                                         <label class="col-sm-2 col-form-label">Set Notes</label>
                                         <div class="col-sm-10">
                                             <textarea name="notes" class="form-control" rows="5">{{set.notes}}</textarea>
@@ -125,7 +134,15 @@
         <script>
             function hideAndShowSets(setId) {
                 var elementId = "#set-" + setId;
-                $(elementId).slideToggle();
+                var iconId = "#icon-" + setId;
+
+                $(elementId).slideToggle(function() {
+                    if ($(this).is(":hidden")) {
+                        $(iconId).html("<i class=\"fa fa-plus\"></i>");
+                    } else {
+                        $(iconId).html("<i class=\"fa fa-minus\"></i>");
+                    }
+                });
             }
         </script>
 
