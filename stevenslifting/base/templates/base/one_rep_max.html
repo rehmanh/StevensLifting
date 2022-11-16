@@ -54,31 +54,16 @@
         </div>
     </section>
 
-        <script>
-            function hideAndShowSets(setId) {
-                var elementId = "#set-" + setId;
-                var iconId = "#icon-" + setId;
+    <script src="{% static 'home/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+    <script src="{% static 'home/vendor/aos/aos.js' %}"></script>
+    <script src="{% static 'home/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'home/vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'home/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'home/vendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'home/vendor/php-email-form/validate.js' %}"></script>
 
-                $(elementId).slideToggle(function() {
-                    if ($(this).is(":hidden")) {
-                        $(iconId).html("<i class=\"fa fa-plus\"></i>");
-                    } else {
-                        $(iconId).html("<i class=\"fa fa-minus\"></i>");
-                    }
-                });
-            }
-        </script>
-
-        <script src="{% static 'home/vendor/purecounter/purecounter_vanilla.js' %}"></script>
-        <script src="{% static 'home/vendor/aos/aos.js' %}"></script>
-        <script src="{% static 'home/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-        <script src="{% static 'home/vendor/glightbox/js/glightbox.min.js' %}"></script>
-        <script src="{% static 'home/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
-        <script src="{% static 'home/vendor/swiper/swiper-bundle.min.js' %}"></script>
-        <script src="{% static 'home/vendor/php-email-form/validate.js' %}"></script>
-
-        <!-- Template Main JS File -->
-        <script src="{% static 'home/js/main.js' %}"></script>
-        <script src="{% static 'home/js/script.js' %}"></script>
+    <!-- Template Main JS File -->
+    <script src="{% static 'home/js/main.js' %}"></script>
+    <script src="{% static 'home/js/script.js' %}"></script>
 </body>
 
