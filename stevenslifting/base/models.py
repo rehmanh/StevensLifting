@@ -32,15 +32,15 @@ class Exercise(models.Model):
 class Set(models.Model):
     set_number = models.IntegerField(default=1, null=False)
     num_repititions = models.IntegerField(null=True)
-    weight = models.FloatField(null=True)
-    notes = models.TextField(null=True)
-    created_date_time = models.DateTimeField(auto_now_add=True)
-    updated_date_time = models.DateTimeField(auto_now=True)
+    weight = models.FloatField(null=True, blank=True)
+    notes = models.TextField(null=True, blank=True)
+    created_date_time = models.DateTimeField(auto_now_add=True, blank=True)
+    updated_date_time = models.DateTimeField(auto_now=True, blank=True)
     # foreign key relationship: one Exercise can have multiple sets
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.set_number)
+        return str(self.set_number) + str(self.exercise.exercise_name)
 
 class Announcement(models.Model):
     title = models.CharField(null=False, max_length=255)

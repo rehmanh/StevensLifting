@@ -75,6 +75,8 @@ def workout(request, pk):
             'msg': 'It looks like you do not have any Workouts scheduled'
         })
 
+""" Method to update set """
+# TODO: needs improvements... this is messy logic
 def update_set(request, pk):
     if request.method == 'POST':
         set = Set.objects.get(id=pk)
@@ -82,9 +84,21 @@ def update_set(request, pk):
             num_reps = request.POST.get("num_repititions")
             weight = request.POST.get("weight")
             notes = request.POST.get("notes")
-            set.num_repititions = num_reps
-            set.weight = weight
-            set.notes = notes
+            if num_reps is not None and num_reps.isnumeric():
+                set.num_repititions = int(num_reps)
+            else:
+                messages.error(request, 'There was an error setting the number of reps')
+                return redirect(request.META['HTTP_REFERER'])
+            if weight is not None:
+                set.weight = weight
+            else:
+                messages.error(request, 'There was an error setting the weight for this set')
+                return redirect(request.META['HTTP_REFERER'])
+            if notes is not None and isinstance(notes, str):
+                set.notes = notes
+            else:
+                messages.error(request, 'There was an error setting the set notes for this set')
+                return redirect(request.META['HTTP_REFERER'])
             set.save()
             messages.success(request, 'Set updated successfully')
             return redirect(request.META['HTTP_REFERER'])
