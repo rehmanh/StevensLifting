@@ -56,15 +56,26 @@
                     </div>
                 {% endfor %}
             {% endif %}
+
             Details for workout {{workout.workout_name}} on {{workout.workout_date}}
             
             {% for exercise in exercises %}
             
             <div class="row">
+                <!-- custom styling for the exercise card TODO: need to move this to it's own class at some point -->
+                <div class="card" style="padding: 10px; margin-top: 10px; color: #444; box-shadow: 0 0 30px rgba(214, 215, 216, 0.6);">
                 
-                    <h3>
-                        {{exercise.exercise_name}}
-                    </h3>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h3>
+                                {{exercise.exercise_name}}
+                            </h3>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary">Add Set</button>
+                        </div>
+                    </div>
+                    
 
                     {% for set in exercise.sets %}
                     <div style="margin-top: 10px;">
@@ -124,6 +135,7 @@
                     </div>
                         
                     {% endfor %}
+                </div>
             </div>
 
             {% endfor %}
