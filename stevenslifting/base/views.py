@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
-from .models import Announcement, Workout, User, Exercise, Set
+from .models import Announcement, Workout, User, Exercise, Set, OneRepMax
 
 # Create your views here.
 
@@ -90,3 +90,17 @@ def update_set(request, pk):
             return redirect(request.META['HTTP_REFERER'])
         else:
             messages.error(request, 'There was an error saving the Set details. Please try again')
+
+def one_rep_max(request):
+    if request.user.is_authenticated:
+        member = request.user
+        one_rep_maxes = OneRepMax.objects.filter(user=member.id)
+        if one_rep_maxes is not None:
+            context = {
+                'oneRepMaxes': one_rep_maxes
+            }
+        return render(request, 'base/one_rep_max.html', context)
+    else:
+        return render(request, 'base/404.html', context={
+            'msg': 'You must be logged in to view your One Rep Maxes'
+        })
