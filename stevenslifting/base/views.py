@@ -118,3 +118,8 @@ def one_rep_max(request):
         return render(request, 'base/404.html', context={
             'msg': 'You must be logged in to view your One Rep Maxes'
         })
+
+def update_one_rep_maxes(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            return redirect(request.META['HTTP_REFERER'])

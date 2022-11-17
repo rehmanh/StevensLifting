@@ -8,5 +8,6 @@ urlpatterns = [
     path('workouts', views.workouts, name="workouts"),
     path('workouts/oneRepMaxes', views.one_rep_max, name="oneRepMaxes"),
     path('workout/<str:pk>', views.workout, name="workout"),
-    path('workout/set/<str:pk>/update', views.update_set, name="updateSet")
+    path('workout/set/<str:pk>/update', views.update_set, name="updateSet"),
+    path('workouts/oneRepMaxes/update', views.update_one_rep_maxes, name="updateOneRepMaxes")
 ]
