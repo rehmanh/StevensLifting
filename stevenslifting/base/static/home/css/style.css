@@ -1371,14 +1371,14 @@ section {
 }
 
 #footer {
-  background: #d3d7dc;
+  background: rgb(161, 40, 58);
   padding: 0 0 30px 0;
   color: #fff;
   font-size: 14px;
 }
 
 #footer .footer-top {
-  background: #d9dcdf;
+  background: rgb(161, 40, 58);
   border-top: 1px solid #7b8894;
   border-bottom: 1px solid #67839c;
   padding: 60px 0 30px 0;

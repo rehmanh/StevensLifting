@@ -33,6 +33,11 @@
 
   <!-- jQuery 3.6.0 CDN -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <!-- HelloWeek calendar -->
+  <link href="{% static 'hello-week/dist/hello.week.css' %}" rel="stylesheet">
+  <link href="{% static 'hello-week/docs/v2/demos/styles/hello.week.theme.min.css' %}" rel="stylesheet">
+
+  
 </head>
 <body>
     <!-- ======= Header ======= -->
@@ -45,6 +50,11 @@
         {% include 'base/navbar.html' %}
         </div>
     </header><!-- End Header -->
+
+    <section>
+        <div class="calendar" style="padding: 10px;">
+        </div>
+    </section>
 
     <section > 
         <div class="container grid-container">
@@ -75,7 +85,51 @@
        
     </section>
     
-    
+    <script type="module">
+        import HelloWeek, { el } from 'https://cdn.jsdelivr.net/npm/hello-week@3.0.4-beta/dist/hello.week.min.esm.js';
+
+        /*
+        TODO: need to get dump of workouts data from backend
+        pass to JS
+        and then use the onLoad function to take the workout dates
+        And show ".is-today" class for those workouts
+
+        If ".is-today" is onSelect'ed, then show the workout modal for that day
+
+        onSelect has the date information within the el
+        */
+
+        const cal = new HelloWeek({
+            selector: '.calendar',
+            lang: 'en',
+            langFolder: './langs/',
+            format: 'MM/DD/YYYY',
+            weekShort: true,
+            monthShort: false,
+            multiplePick: false,
+            defaultDate: null,
+            minDate: null,
+            maxDate: null,
+            disabledDaysOfWeek: null,
+            disableDates: null,
+            weekStart: 1, // week start on Monday
+            timezoneOffset: new Date().getTimezoneOffset(),
+            daysSelected: null,
+            daysHighlight: null,
+            disablePastDays: false,
+            todayHighlight: false,
+            range: false,
+            locked: false,
+            rtl: false,
+            nav: ['◀', '▶'],
+            onClear: () => {},
+            onLoad: () => {},
+            onNavigation: () => {},
+            onSelect: (el) => {
+                console.log(el);
+            }
+        });
+    </script>
     
     <script src="{% static 'home/vendor/purecounter/purecounter_vanilla.js' %}"></script>
     <script src="{% static 'home/vendor/aos/aos.js' %}"></script>
