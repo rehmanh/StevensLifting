@@ -1,7 +1,9 @@
 import re
+import json
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.core import serializers
 
 from .models import Announcement, Workout, User, Exercise, Set, OneRepMax
 
@@ -41,12 +43,13 @@ def home(request):
 def workouts(request):
     if request.user.is_authenticated:
         member = request.user
-        workouts = Workout.objects.filter(user=member.id)
+        workouts = Workout.objects.filter(user=member.id).order_by('-workout_date')
         if workouts is not None:
             for workout in workouts:
                 exercises = Exercise.objects.filter(workout=workout.id)
                 workout.exercises = exercises
-            
+
+            workouts = serializers.serialize("json", workouts)
             context = {
                 'workouts': workouts,
                 'user': member

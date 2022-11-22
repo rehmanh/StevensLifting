@@ -51,16 +51,21 @@
         </div>
     </header><!-- End Header -->
 
-    <section>
+    <div class="container">
+        <div class="section-title" style="margin-top: 100px;">
+            <h2>Workouts for {{user}}</h2>
+            <h6>Click the <span style="color: #8fbc8f;">green</span> dates to view the workout for that date</h6>
+        </div>
+    </div>
+
+    <section style="padding: 0px;">
         <div class="calendar" style="padding: 10px;">
         </div>
     </section>
 
-    <section > 
+    <!-- <section > 
         <div class="container grid-container">
-            <div class="section-title">
-                <h2>Workouts for {{user}}</h2>
-            </div>
+            
             
             {% for workout in workouts %}
             <div class="row contact">
@@ -83,17 +88,13 @@
             {% endfor %}
         </div>
        
-    </section>
+    </section> -->
     
     <script type="module">
         import HelloWeek, { el } from 'https://cdn.jsdelivr.net/npm/hello-week@3.0.4-beta/dist/hello.week.min.esm.js';
 
         /*
-        TODO: need to get dump of workouts data from backend
-        pass to JS
-        and then use the onLoad function to take the workout dates
-        And show ".is-today" class for those workouts
-
+        TODO:
         If ".is-today" is onSelect'ed, then show the workout modal for that day
 
         onSelect has the date information within the el
@@ -123,12 +124,22 @@
             rtl: false,
             nav: ['◀', '▶'],
             onClear: () => {},
-            onLoad: () => {},
+            onLoad: highlightWorkoutDates,
             onNavigation: () => {},
             onSelect: (el) => {
-                console.log(el);
             }
         });
+
+        function highlightWorkoutDates() {
+            var workouts = {{workouts|safe}};
+            let dateArray = new Array()
+            workouts.forEach(function(workout) {
+                var date = new Date(workout.fields.workout_date)
+                dateArray.push({days: [date.toISOString().substring(0,10)]})
+            })
+            cal.setDaysHighlight(dateArray)
+            cal.update()
+        }
     </script>
     
     <script src="{% static 'home/vendor/purecounter/purecounter_vanilla.js' %}"></script>
