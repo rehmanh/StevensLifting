@@ -63,43 +63,21 @@
         </div>
     </section>
 
-    <!-- <section > 
-        <div class="container grid-container">
-            
-            
-            {% for workout in workouts %}
-            <div class="row contact">
-                <div class="col-lg-12 d-flex">
-                    <div class="info-box">
-                        <h3>
-                            <a href="/workout/{{workout.id}}">
-                                {{workout.workout_name}}
-                            </a>
-                        </h3>
-                        <h6>{{workout.workout_date}}</h6>
-                        <div class="card-body">
-                        {% for exercise in workout.exercises %}
-                            <h4>{{ exercise.exercise_name }}</h4>
-                        {% endfor %}
-                        </div>
-                    </div>
-                </div>
+    <div class="modal fade" id="workoutModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Exercise Name</h5>
             </div>
-            {% endfor %}
+            <div class="modal-body" id="modalBody">
+                <p>If you're seeing this text, it's because there was an issue processing this workout. Please let your webmaster know.</p>
+            </div>
+          </div>
         </div>
-       
-    </section> -->
+    </div>
     
     <script type="module">
         import HelloWeek, { el } from 'https://cdn.jsdelivr.net/npm/hello-week@3.0.4-beta/dist/hello.week.min.esm.js';
-
-        /*
-        TODO:
-        If ".is-today" is onSelect'ed, then show the workout modal for that day
-
-        onSelect has the date information within the el
-        */
-
         const cal = new HelloWeek({
             selector: '.calendar',
             lang: 'en',
@@ -127,6 +105,7 @@
             onLoad: highlightWorkoutDates,
             onNavigation: () => {},
             onSelect: (el) => {
+                triggerWorkoutModal(el)
             }
         });
 
@@ -139,6 +118,47 @@
             })
             cal.setDaysHighlight(dateArray)
             cal.update()
+        }
+
+        function triggerWorkoutModal(date) {
+            var workouts = {{workouts|safe}}
+            var exercises = {{exercises|safe}}
+            let workout
+            let exerciseList
+            let exerciseHtml = ""
+
+            let modalWrapper = $('#workoutModal')
+            let modalLabel = $('#modalLabel')
+            let modalBody = $('#modalBody')
+            if (date.isHighlight) {
+                workout = workouts.filter(w => w.fields.workout_date.substring(0,10) == date.date)
+                if (workout) {
+                    exerciseList = exercises.filter(e => e.fields.workout === workout[0].pk)
+                    console.log(exercises)
+                    console.log(workout)
+                    modalLabel.html(
+                        "<a href=\"/workout/" 
+                            + workout[0].pk + "\">" 
+                            + workout[0].fields.workout_name 
+                            + "</a>"
+                    )
+                    if (exerciseList) {
+                        exerciseHtml = "<ol>"
+                        exerciseList.forEach((exercise) => {
+                            exerciseHtml += "<li>" + exercise.fields.exercise_name +"</li>"
+                        })
+                        exerciseHtml += "</ol>"
+                    }
+                    else {
+                        exerciseHtml = "Sorry, there was an issue fetching the exercises for this workout."
+                    }
+                    modalBody.html(exerciseHtml)
+                    modalWrapper.modal('show')    
+                } else {
+                    console.log("There was an error with the workout set for the date " + date.date)
+                }
+                
+            }
         }
     </script>
     

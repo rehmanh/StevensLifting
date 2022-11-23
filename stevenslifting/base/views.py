@@ -43,15 +43,18 @@ def home(request):
 def workouts(request):
     if request.user.is_authenticated:
         member = request.user
+        # retrieve workouts
         workouts = Workout.objects.filter(user=member.id).order_by('-workout_date')
-        if workouts is not None:
-            for workout in workouts:
-                exercises = Exercise.objects.filter(workout=workout.id)
-                workout.exercises = exercises
-
+        # retreive workout ids for workouts
+        workout_ids = workouts.values_list('id', flat=True)
+        # retreive exercises for workout ids
+        exercises = Exercise.objects.filter(workout_id__in=list(workout_ids))
+        if workouts is not None and exercises is not None:
             workouts = serializers.serialize("json", workouts)
+            exercises = serializers.serialize("json", exercises)
             context = {
                 'workouts': workouts,
+                'exercises': exercises,
                 'user': member
             }
         return render(request, 'base/workouts.html', context)
