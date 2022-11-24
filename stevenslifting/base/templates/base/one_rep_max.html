@@ -49,6 +49,21 @@
 
     <section id="oneRepMax">
         <div class="container">
+
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ message }}
+                    </div>
+                    {% else %}
+                    <div class="alert alert-success" role="alert">
+                        {{ message }}
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
             <div class="section-title">
                 <h2>Your One-Rep Maxes</h2>
             </div>
@@ -61,7 +76,7 @@
                         <div class="form-group row" style="margin-bottom: 10px;">
                             <label class="col-sm-6 col-form-label" for="onerepmax-{{orm.id}}">{{orm.exercise}}</label>
                             <div class="col-sm-6">
-                                <input type="number" name="weight" class="form-control" id="onerepmax-{{orm.id}}" value="{{orm.weight}}"/>
+                                <input type="number" name="{{orm.exercisenameforhtml}}-weight" class="form-control" id="onerepmax-{{orm.id}}" value="{{orm.weight}}"/>
                             </div>
                         </div>
                         {% endfor %}

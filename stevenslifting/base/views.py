@@ -90,21 +90,17 @@ def update_set(request, pk):
             num_reps = request.POST.get("num_repititions")
             weight = request.POST.get("weight")
             notes = request.POST.get("notes")
-            if num_reps is not None and num_reps.isnumeric():
+            if num_reps is not "" and num_reps.isnumeric():
                 set.num_repititions = int(num_reps)
             else:
                 messages.error(request, 'There was an error setting the number of reps')
                 return redirect(request.META['HTTP_REFERER'])
-            if weight is not None:
+            if weight is not "":
                 set.weight = weight
             else:
                 messages.error(request, 'There was an error setting the weight for this set')
                 return redirect(request.META['HTTP_REFERER'])
-            if notes is not None and isinstance(notes, str):
-                set.notes = notes
-            else:
-                messages.error(request, 'There was an error setting the set notes for this set')
-                return redirect(request.META['HTTP_REFERER'])
+            set.notes = notes
             set.save()
             messages.success(request, 'Set updated successfully')
             return redirect(request.META['HTTP_REFERER'])
@@ -127,5 +123,24 @@ def one_rep_max(request):
 
 def update_one_rep_maxes(request):
     if request.user.is_authenticated:
+        one_rep_maxes = OneRepMax.objects.filter(user=request.user.id)
         if request.method == 'POST':
+            bench_press = request.POST.get("BenchPress-weight")
+            squat = request.POST.get("Squat-weight")
+            deadlift = request.POST.get("Deadlift-weight")
+            print('printing bench:')
+            print(bench_press)
+            if bench_press is not "" and squat is not "" and deadlift is not "":
+                bench_max = one_rep_maxes.get(exercise="Bench Press")
+                squat_max = one_rep_maxes.get(exercise="Squat")
+                deadlift_max = one_rep_maxes.get(exercise="Deadlift")
+                bench_max.weight = bench_press
+                squat_max.weight = squat
+                deadlift_max.weight = deadlift
+                bench_max.save()
+                squat_max.save()
+                deadlift_max.save()
+                messages.success(request, 'One Rep Maxes updated successfully')
+            else:
+                messages.error(request, 'There was an error saving the One Rep Max Data.')
             return redirect(request.META['HTTP_REFERER'])

@@ -56,5 +56,9 @@ class OneRepMax(models.Model):
     weight = models.FloatField(null=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
 
+    @property
+    def exercisenameforhtml(self):
+        return self.exercise.replace(' ', '')
+
     def __str__(self):
         return self.exercise
